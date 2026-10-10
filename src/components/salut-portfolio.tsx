@@ -578,7 +578,7 @@ const projects = [
     accent: "gold",
     visual: "grid",
     images: [
-      "wig_E-commerce.png",       // Grid 1
+      "./image/IMG_2484.JPG",       // Grid 1
       "Port.jpg",   // Grid 2
       "About-me-2.png",    // Grid 3
       "contact.png",       // Grid 4
@@ -610,15 +610,15 @@ const projects = [
     accent: "blue",
     visual: "grid",
     images: [
-      "", // Grid 1 - add your photo path
-      "", // Grid 2
-      "", // Grid 3
-      "", // Grid 4
-      "", // Grid 5
-      "", // Grid 6
-      "", // Grid 7
-      "", // Grid 8
-      "", // Grid 9
+      "IMG_2484.JPG", // Grid 1 - add your photo path
+      "IMG_2463.JPEG", // Grid 2
+      "IMG_2462.JPEG", // Grid 3
+      "IMG_2461.JPEG", // Grid 4
+      "IMG_2460.JPEG", // Grid 5
+      "IMG_2459.JPEG", // Grid 6
+      "IMG_1858.JPG", // Grid 7
+      "IMG_1716.JPG", // Grid 8
+      "F523B3AC-600F-4A74-B031-13728545EDFE.JPG", // Grid 9
     ],
     gridLinks: [],
     lightbox: true,
@@ -627,7 +627,7 @@ const projects = [
     id: "3",
     n: 3,
     title: "social media content",
-    desc: "video for instagrame and tiktok.",
+    desc: "video for instagram and tiktok.",
     category: "video",
     link: "#",
     accent: "orange",
@@ -636,7 +636,7 @@ const projects = [
     gridLinks: [
       "https://www.instagram.com/reel/DS-qbFjCIBH/?utm_source=ig_web_copy_link", // Grid 1 link
       "https://www.instagram.com/reel/DZieh96RgRG/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==", // Grid 2 link
-      "https://your-link-3.com", // Grid 3 link
+      "https://www.instagram.com/reel/Dced2QyNA6X/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==", // Grid 3 link
       "https://your-link-4.com", // Grid 4 link
       "https://your-link-5.com", // Grid 5 link
       "https://your-link-6.com", // Grid 6 link
@@ -702,6 +702,7 @@ function StickyProject({ project, index, total }: { project: typeof projects[num
   };
 
   return (
+    <>
     <div ref={ref} className="relative" style={{ height: "120vh" }}>
       <div className="sticky top-24 px-6">
         <motion.article
@@ -790,26 +791,6 @@ function StickyProject({ project, index, total }: { project: typeof projects[num
                 })}
               </div>
 
-              {/* Lightbox */}
-              {lightboxImg && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={() => setLightboxImg(null)}
-                  className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 cursor-zoom-out"
-                >
-                  <motion.img
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                    src={lightboxImg}
-                    alt="preview"
-                    className="max-h-[90vh] max-w-[90vw] rounded-xl object-contain shadow-2xl"
-                    onClick={e => e.stopPropagation()}
-                  />
-                  <button onClick={() => setLightboxImg(null)} className="absolute top-6 right-6 text-white text-3xl leading-none">&times;</button>
-                </motion.div>
-              )}
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--text)]/60">
                 <span>frame.{String(index + 1).padStart(3, "0")}</span>
                 <span>{total.toString().padStart(2, "0")} / total</span>
@@ -819,6 +800,33 @@ function StickyProject({ project, index, total }: { project: typeof projects[num
         </motion.article>
       </div>
     </div>
+
+    {/* Lightbox - outside overflow-hidden so it covers full screen */}
+    {lightboxImg && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        onClick={() => setLightboxImg(null)}
+        className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 cursor-zoom-out"
+      >
+        <motion.img
+          initial={{ scale: 0.85, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, ease }}
+          src={lightboxImg}
+          alt="preview"
+          className="max-h-[90vh] max-w-[90vw] rounded-xl object-contain shadow-2xl"
+          onClick={e => e.stopPropagation()}
+        />
+        <button
+          onClick={() => setLightboxImg(null)}
+          className="absolute top-6 right-6 text-white text-4xl leading-none hover:text-[var(--gold)] transition-colors"
+        >
+          &times;
+        </button>
+      </motion.div>
+    )}
+    </>
   );
 }
 
