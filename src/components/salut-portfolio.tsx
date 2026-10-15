@@ -5,15 +5,15 @@ import { FadeIn, AnimatedText, MagneticButton } from "./motion-primitives";
 import memoji from "./emoji_no_bg.png";
 import aboutMemoji from "./About-me-2.png";
 import contactMemoji from "./contact.png";
-import photo2484 from "./image/IMG_2484.JPG";
-import photo2463 from "./image/IMG_2463.JPEG";
-import photo2462 from "./image/IMG_2462.JPEG";
-import photo2461 from "./image/IMG_2461.JPEG";
-import photo2460 from "./image/IMG_2460.JPEG";
-import photo2459 from "./image/IMG_2459.JPEG";
-import photo1858 from "./image/IMG_1858.JPG";
-import photo1716 from "./image/IMG_1716.JPG";
-import photoPortrait from "./image/F523B3AC-600F-4A74-B031-13728545EDFE.JPG";
+const photo2484 = new URL("./image/IMG_2484.JPG", import.meta.url).href;
+const photo2463 = new URL("./image/IMG_2463.JPEG", import.meta.url).href;
+const photo2462 = new URL("./image/IMG_2462.JPEG", import.meta.url).href;
+const photo2461 = new URL("./image/IMG_2461.JPEG", import.meta.url).href;
+const photo2460 = new URL("./image/IMG_2460.JPEG", import.meta.url).href;
+const photo2459 = new URL("./image/IMG_2459.JPEG", import.meta.url).href;
+const photo1858 = new URL("./image/IMG_1858.JPG", import.meta.url).href;
+const photo1716 = new URL("./image/IMG_1716.JPG", import.meta.url).href;
+const photoPortrait = new URL("./image/F523B3AC-600F-4A74-B031-13728545EDFE.JPG", import.meta.url).href;
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
