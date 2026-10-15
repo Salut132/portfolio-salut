@@ -5,6 +5,15 @@ import { FadeIn, AnimatedText, MagneticButton } from "./motion-primitives";
 import memoji from "./emoji_no_bg.png";
 import aboutMemoji from "./About-me-2.png";
 import contactMemoji from "./contact.png";
+import photo2484 from "./image/IMG_2484.JPG";
+import photo2463 from "./image/IMG_2463.JPEG";
+import photo2462 from "./image/IMG_2462.JPEG";
+import photo2461 from "./image/IMG_2461.JPEG";
+import photo2460 from "./image/IMG_2460.JPEG";
+import photo2459 from "./image/IMG_2459.JPEG";
+import photo1858 from "./image/IMG_1858.JPG";
+import photo1716 from "./image/IMG_1716.JPG";
+import photoPortrait from "./image/F523B3AC-600F-4A74-B031-13728545EDFE.JPG";
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
@@ -610,15 +619,15 @@ const projects = [
     accent: "blue",
     visual: "grid",
     images: [
-      "IMG_2484.JPG", // Grid 1 - add your photo path
-      "IMG_2463.JPEG", // Grid 2
-      "IMG_2462.JPEG", // Grid 3
-      "IMG_2461.JPEG", // Grid 4
-      "IMG_2460.JPEG", // Grid 5
-      "IMG_2459.JPEG", // Grid 6
-      "IMG_1858.JPG", // Grid 7
-      "IMG_1716.JPG", // Grid 8
-      "F523B3AC-600F-4A74-B031-13728545EDFE.JPG", // Grid 9
+      photo2484, // Grid 1
+      photo2463, // Grid 2
+      photo2462, // Grid 3
+      photo2461, // Grid 4
+      photo2460, // Grid 5
+      photo2459, // Grid 6
+      photo1858, // Grid 7
+      photo1716, // Grid 8
+      photoPortrait, // Grid 9
     ],
     gridLinks: [],
     lightbox: true,
