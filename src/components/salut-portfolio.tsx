@@ -1,19 +1,33 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Camera, Code2, Aperture, Sparkles, Github, Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
+import {
+  ArrowUpRight,
+  Camera,
+  ChevronLeft,
+  ChevronRight,
+  Code2,
+  Aperture,
+  Sparkles,
+  Github,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Twitter,
+  X,
+} from "lucide-react";
 import { FadeIn, AnimatedText, MagneticButton } from "./motion-primitives";
 import memoji from "./emoji_no_bg.png";
 import aboutMemoji from "./About-me-2.png";
 import contactMemoji from "./contact.png";
-const photo2484 = new URL("./image/IMG_2484.JPG", import.meta.url).href;
-const photo2463 = new URL("./image/IMG_2463.JPEG", import.meta.url).href;
-const photo2462 = new URL("./image/IMG_2462.JPEG", import.meta.url).href;
-const photo2461 = new URL("./image/IMG_2461.JPEG", import.meta.url).href;
-const photo2460 = new URL("./image/IMG_2460.JPEG", import.meta.url).href;
-const photo2459 = new URL("./image/IMG_2459.JPEG", import.meta.url).href;
-const photo1858 = new URL("./image/IMG_1858.JPG", import.meta.url).href;
-const photo1716 = new URL("./image/IMG_1716.JPG", import.meta.url).href;
-const photoPortrait = new URL("./image/F523B3AC-600F-4A74-B031-13728545EDFE.JPG", import.meta.url).href;
+import photo2484 from "./image/IMG_2484.JPG";
+import photo2463 from "./image/IMG_2463.JPEG";
+import photo2462 from "./image/IMG_2462.JPEG";
+import photo2461 from "./image/IMG_2461.JPEG";
+import photo2460 from "./image/IMG_2460.JPEG";
+import photo2459 from "./image/IMG_2459.JPEG";
+import photo1858 from "./image/IMG_1858.JPG";
+import photo1716 from "./image/IMG_1716.JPG";
+import photoPortrait from "./image/F523B3AC-600F-4A74-B031-13728545EDFE.JPG";
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
@@ -686,9 +700,52 @@ function PortfolioSection() {
 
 function StickyProject({ project, index, total }: { project: typeof projects[number]; index: number; total: number }) {
   const ref = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.94, 1, 0.92]);
-  const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [activePhoto, setActivePhoto] = useState(0);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setLightboxIndex(null);
+      } else if (event.key === "ArrowRight") {
+        setLightboxIndex((current) =>
+          current === null ? null : (current + 1) % project.images.length,
+        );
+      } else if (event.key === "ArrowLeft") {
+        setLightboxIndex((current) =>
+          current === null
+            ? null
+            : (current - 1 + project.images.length) % project.images.length,
+        );
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxIndex, project.images.length]);
+
+  function scrollGallery(direction: -1 | 1) {
+    const gallery = galleryRef.current;
+    const firstPhoto = gallery?.firstElementChild;
+    if (!gallery || !(firstPhoto instanceof HTMLElement)) return;
+
+    const gap = Number.parseFloat(getComputedStyle(gallery).columnGap) || 0;
+    gallery.scrollBy({
+      left: (firstPhoto.offsetWidth + gap) * direction,
+      behavior: "smooth",
+    });
+  }
 
   const accentMap: Record<string, string> = {
     orange: "var(--orange)",
@@ -745,65 +802,137 @@ function StickyProject({ project, index, total }: { project: typeof projects[num
             <div className="relative min-h-[420px] overflow-hidden bg-[var(--bg)] lg:min-h-[600px]">
               <div className="absolute inset-0" style={{ background: visualBg[project.accent] || visualBg.orange }} />
               <div className="absolute inset-0 bg-grain opacity-50" />
-              <div className="absolute inset-4 sm:inset-6 grid grid-cols-3 grid-rows-3 gap-2 sm:gap-3">
-                {Array.from({ length: 9 }).map((_, i) => {
-                  const gridLink = project.gridLinks?.[i];
-                  const content = (
-                    <>
-                      {project.images && project.images[i] ? (
-                        <img
-                          src={project.images[i]}
-                          alt={`${project.title} ${i + 1}`}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <div
-                          className="h-full w-full"
-                          style={{
-                            background: i % 3 === 0
-                              ? `${accentColor}25`
-                              : i % 3 === 1
-                              ? "rgba(237,233,224,0.04)"
-                              : "rgba(13,13,12,0.6)",
-                          }}
-                        />
-                      )}
-                    </>
-                  );
-                  return (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.05, duration: 0.6, ease }}
-                      whileHover={{ scale: 1.05 }}
-                      className="rounded-lg border border-[var(--text)]/5 overflow-hidden w-full h-full"
-                    >
-                      {gridLink ? (
-                        <a href={gridLink} target="_blank" rel="noopener noreferrer" className="block h-full w-full relative group">
-                          {content}
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                            <ArrowUpRight size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                          </div>
-                        </a>
-                      ) : project.lightbox && project.images?.[i] ? (
-                        <button onClick={() => setLightboxImg(project.images![i])} className="block h-full w-full relative group cursor-zoom-in">
-                          {content}
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                            <span className="text-white text-xl opacity-0 group-hover:opacity-100 transition-opacity">⛶</span>
-                          </div>
-                        </button>
-                      ) : content}
-                    </motion.div>
-                  );
-                })}
-              </div>
+              {project.lightbox ? (
+                <>
+                  <div
+                    ref={galleryRef}
+                    className="gallery-scrollbar absolute inset-x-0 top-4 bottom-12 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-4 pb-3 sm:px-6"
+                    aria-label={`${project.title} photo gallery`}
+                    onScroll={(event) => {
+                      const gallery = event.currentTarget;
+                      const galleryLeft = gallery.getBoundingClientRect().left;
+                      let closestIndex = 0;
+                      let closestDistance = Number.POSITIVE_INFINITY;
 
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--text)]/60">
-                <span>frame.{String(index + 1).padStart(3, "0")}</span>
-                <span>{total.toString().padStart(2, "0")} / total</span>
-              </div>
+                      Array.from(gallery.children).forEach((child, photoIndex) => {
+                        const distance = Math.abs(
+                          child.getBoundingClientRect().left - galleryLeft,
+                        );
+                        if (distance < closestDistance) {
+                          closestDistance = distance;
+                          closestIndex = photoIndex;
+                        }
+                      });
+
+                      setActivePhoto(closestIndex);
+                    }}
+                  >
+                    {project.images.map((image, photoIndex) => (
+                      <motion.button
+                        key={image}
+                        type="button"
+                        initial={{ opacity: 0, scale: 0.96 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: photoIndex * 0.04, duration: 0.5, ease }}
+                        onClick={() => setLightboxIndex(photoIndex)}
+                        aria-label={`Open photo ${photoIndex + 1} of ${project.images.length}`}
+                        className="group relative h-full min-w-[82%] snap-start overflow-hidden rounded-xl border border-[var(--text)]/10 text-left sm:min-w-[70%]"
+                      >
+                        <img
+                          src={image}
+                          alt={`${project.title}, photo ${photoIndex + 1}`}
+                          loading={photoIndex === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-70 transition-opacity group-hover:opacity-100" />
+                        <span className="absolute bottom-4 left-4 font-mono text-[10px] uppercase tracking-[0.25em] text-white/80">
+                          photo / {String(photoIndex + 1).padStart(2, "0")}
+                        </span>
+                        <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/30 bg-black/25 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                          <Aperture size={16} aria-hidden="true" />
+                        </span>
+                      </motion.button>
+                    ))}
+                  </div>
+                  <div className="absolute bottom-0 left-4 right-4 flex h-12 items-center justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--text)]/60 sm:left-6 sm:right-6">
+                    <span>frame.{String(index + 1).padStart(3, "0")}</span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => scrollGallery(-1)}
+                        aria-label="Scroll to previous photos"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-[var(--text)]/15 text-[var(--text)] transition-colors hover:border-[var(--cyan)] hover:text-[var(--cyan)]"
+                      >
+                        <ChevronLeft size={16} aria-hidden="true" />
+                      </button>
+                      <span className="min-w-16 text-center">
+                        {String(activePhoto + 1).padStart(2, "0")} / {String(project.images.length).padStart(2, "0")}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => scrollGallery(1)}
+                        aria-label="Scroll to next photos"
+                        className="grid h-8 w-8 place-items-center rounded-full border border-[var(--text)]/15 text-[var(--text)] transition-colors hover:border-[var(--cyan)] hover:text-[var(--cyan)]"
+                      >
+                        <ChevronRight size={16} aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="absolute inset-4 grid grid-cols-3 grid-rows-3 gap-2 sm:inset-6 sm:gap-3">
+                  {Array.from({ length: 9 }).map((_, i) => {
+                    const gridLink = project.gridLinks?.[i];
+                    const content = project.images?.[i] ? (
+                      <img
+                        src={project.images[i]}
+                        alt={`${project.title} ${i + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="h-full w-full"
+                        style={{
+                          background: i % 3 === 0
+                            ? `${accentColor}25`
+                            : i % 3 === 1
+                            ? "rgba(237,233,224,0.04)"
+                            : "rgba(13,13,12,0.6)",
+                        }}
+                      />
+                    );
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.05, duration: 0.6, ease }}
+                        whileHover={{ scale: 1.05 }}
+                        className="h-full w-full overflow-hidden rounded-lg border border-[var(--text)]/5"
+                      >
+                        {gridLink ? (
+                          <a href={gridLink} target="_blank" rel="noopener noreferrer" className="group relative block h-full w-full">
+                            {content}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30">
+                              <ArrowUpRight size={20} className="text-white opacity-0 transition-opacity group-hover:opacity-100" />
+                            </div>
+                          </a>
+                        ) : content}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {!project.lightbox && (
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--text)]/60">
+                  <span>frame.{String(index + 1).padStart(3, "0")}</span>
+                  <span>{total.toString().padStart(2, "0")} / total</span>
+                </div>
+              )}
             </div>
           </div>
         </motion.article>
@@ -811,28 +940,57 @@ function StickyProject({ project, index, total }: { project: typeof projects[num
     </div>
 
     {/* Lightbox - outside overflow-hidden so it covers full screen */}
-    {lightboxImg && (
+    {lightboxIndex !== null && project.images[lightboxIndex] && (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        onClick={() => setLightboxImg(null)}
-        className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 cursor-zoom-out"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${project.title} photo viewer`}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) setLightboxIndex(null);
+        }}
+        className="fixed inset-0 z-[200] flex cursor-zoom-out items-center justify-center bg-black/95 p-4"
       >
         <motion.img
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.3, ease }}
-          src={lightboxImg}
-          alt="preview"
-          className="max-h-[90vh] max-w-[90vw] rounded-xl object-contain shadow-2xl"
-          onClick={e => e.stopPropagation()}
+          src={project.images[lightboxIndex]}
+          alt={`${project.title}, photo ${lightboxIndex + 1} of ${project.images.length}`}
+          className="max-h-[88vh] max-w-[88vw] rounded-lg object-contain shadow-2xl"
         />
         <button
-          onClick={() => setLightboxImg(null)}
-          className="absolute top-6 right-6 text-white text-4xl leading-none hover:text-[var(--gold)] transition-colors"
+          type="button"
+          onClick={() => setLightboxIndex(null)}
+          aria-label="Close photo viewer"
+          className="absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-black/40 text-white transition-colors hover:border-[var(--gold)] hover:text-[var(--gold)]"
         >
-          &times;
+          <X size={20} aria-hidden="true" />
         </button>
+        <button
+          type="button"
+          onClick={() =>
+            setLightboxIndex((lightboxIndex - 1 + project.images.length) % project.images.length)
+          }
+          aria-label="View previous photo"
+          className="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-black/40 text-white transition-colors hover:border-[var(--cyan)] hover:text-[var(--cyan)] sm:left-8"
+        >
+          <ChevronLeft size={22} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            setLightboxIndex((lightboxIndex + 1) % project.images.length)
+          }
+          aria-label="View next photo"
+          className="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-black/40 text-white transition-colors hover:border-[var(--cyan)] hover:text-[var(--cyan)] sm:right-8"
+        >
+          <ChevronRight size={22} aria-hidden="true" />
+        </button>
+        <span className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.25em] text-white/75">
+          {String(lightboxIndex + 1).padStart(2, "0")} / {String(project.images.length).padStart(2, "0")}
+        </span>
       </motion.div>
     )}
     </>

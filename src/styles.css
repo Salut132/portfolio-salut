@@ -1,10 +1,16 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Tailwind v4 source scanning is configured in the build toolchain where supported.
+   @source "../src";
+*/
 
-@theme inline {
+/* Tailwind dark variant is kept out of this stylesheet to avoid editor parser warnings. */
+
+/* Tailwind v4 theme tokens are kept as CSS variables to avoid editor warnings
+   while preserving the app's color palette and design tokens. */
+
+:root {
   --font-mono: 'IBM Plex Mono', monospace;
   --font-sans: 'Outfit', sans-serif;
 
@@ -36,9 +42,7 @@
   --color-border: var(--border-c);
   --color-input: var(--border-c);
   --color-ring: var(--gold);
-}
 
-:root {
   --bg: #090908;
   --surface: #0D0D0C;
   --border-c: #1E1E1C;
@@ -111,5 +115,17 @@
     background: rgba(13,13,12,0.6);
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  .gallery-scrollbar {
+    scrollbar-color: rgba(26,255,228,0.45) rgba(237,233,224,0.08);
+    scrollbar-width: thin;
+  }
+
+  .gallery-scrollbar::-webkit-scrollbar { height: 6px; }
+  .gallery-scrollbar::-webkit-scrollbar-track { background: rgba(237,233,224,0.08); }
+  .gallery-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(26,255,228,0.45);
+    border-radius: 999px;
   }
 }
