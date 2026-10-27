@@ -617,7 +617,7 @@ const projects = [
       "it-service-hub-zeta.vercel.app", // Grid 3 link
       "wedding-plan-wheat.vercel.app", // Grid 4 link
       "feedback-website-tow.vercel.app", // Grid 5 link
-      "https://your-link-6.com", // Grid 6 link
+      "coffee-hous.vercel.app/", // Grid 6 link
       "https://your-link-7.com", // Grid 7 link
       "https://your-link-8.com", // Grid 8 link
       "https://your-link-9.com", // Grid 9 link
