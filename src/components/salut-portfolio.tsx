@@ -612,11 +612,11 @@ const projects = [
       "About-me-2.png",    // Grid 9
     ],
     gridLinks: [
-      "https://your-link-1.com", // Grid 1 link
-      "https://your-link-2.com", // Grid 2 link
-      "https://your-link-3.com", // Grid 3 link
-      "https://your-link-4.com", // Grid 4 link
-      "https://your-link-5.com", // Grid 5 link
+      "abigu-portfolio.vercel.app", // Grid 1 link
+      "delivery-app-iota-dusky.vercel.app", // Grid 2 link
+      "it-service-hub-zeta.vercel.app", // Grid 3 link
+      "wedding-plan-wheat.vercel.app", // Grid 4 link
+      "feedback-website-tow.vercel.app", // Grid 5 link
       "https://your-link-6.com", // Grid 6 link
       "https://your-link-7.com", // Grid 7 link
       "https://your-link-8.com", // Grid 8 link
