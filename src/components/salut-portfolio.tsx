@@ -612,7 +612,7 @@ const projects = [
       "About-me-2.png",    // Grid 9
     ],
     gridLinks: [
-      "abigu-portfolio.vercel.app", // Grid 1 link
+      "https://abigu-portfolio.vercel.app", // Grid 1 link
       "delivery-app-iota-dusky.vercel.app", // Grid 2 link
       "it-service-hub-zeta.vercel.app", // Grid 3 link
       "wedding-plan-wheat.vercel.app", // Grid 4 link
