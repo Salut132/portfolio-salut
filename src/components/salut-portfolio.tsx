@@ -658,12 +658,12 @@ const projects = [
     images: [],
     gridLinks: [
       "https://www.instagram.com/reel/DS-qbFjCIBH/?utm_source=ig_web_copy_link", // Grid 1 link
-      "https://www.instagram.com/reel/DZieh96RgRG/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==", // Grid 2 link
+      "https://vt.tiktok.com/ZSpfaQwFq/", // Grid 2 link
       "https://www.instagram.com/reel/Dced2QyNA6X/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==", // Grid 3 link
-      "https://your-link-4.com", // Grid 4 link
-      "https://your-link-5.com", // Grid 5 link
-      "https://your-link-6.com", // Grid 6 link
-      "https://your-link-7.com", // Grid 7 link
+      "https://vt.tiktok.com/ZSpfan9yP/", // Grid 4 link
+      "https://www.instagram.com/reel/DZieh96RgRG/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==", // Grid 5 link
+      "https://vm.tiktok.com/ZN8PMRjnN/", // Grid 6 link
+      "https://www.instagram.com/reel/DbRPa6ARUra/?xtok=MXZkN2pyeHZmcnZ5Yw==", // Grid 7 link
       "https://your-link-8.com", // Grid 8 link
       "https://your-link-9.com", // Grid 9 link
     ],
