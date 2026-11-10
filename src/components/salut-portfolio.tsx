@@ -664,8 +664,8 @@ const projects = [
       "https://www.instagram.com/reel/DZieh96RgRG/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==", // Grid 5 link
       "https://vm.tiktok.com/ZN8PMRjnN/", // Grid 6 link
       "https://www.instagram.com/reel/DbRPa6ARUra/?xtok=MXZkN2pyeHZmcnZ5Yw==", // Grid 7 link
-      "https://your-link-8.com", // Grid 8 link
-      "https://your-link-9.com", // Grid 9 link
+      "https://vt.tiktok.com/ZSpP8aaPw/", // Grid 8 link
+      "https://www.instagram.com/reel/DW-paV4CCAG/?obrf=MWl4cjV2emhpa2hvdA==", // Grid 9 link
     ],
   },
 ];
